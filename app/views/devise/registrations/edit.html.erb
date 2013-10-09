@@ -1,0 +1,79 @@
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'form-horizontal' }) do |f| %>
+  <%= devise_error_messages! %>
+  <div class="control-group">
+    <%= f.label :name, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :autofocus => true %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :email, class: 'control-label' %>
+    <div class="controls">
+      <%= f.email_field :email %>
+    </div>
+  </div>
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div class="control-group">
+      <p>Waiting confirmation for:</p>
+      <div class="controls">
+        <%= resource.unconfirmed_email %>
+      </div>
+    </div>
+  <% end %>
+  <% unless current_user.provider? %>
+  <div class="control-group">
+    <%= f.label :password, class: 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password %> <i>(leave blank if you don't want to change it)</i>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :password_confirmation, class: 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password_confirmation %>
+    </div>
+  </div>
+  <% end %>
+  <% if current_user.avatar? %>
+    <div class="control-group">
+      <p class="control-label">Current avatar</p>
+      <div class="controls">
+        <%= image_tag(current_user.avatar.profile.url) %>
+      </div>
+    </div>
+  <% end %>
+  <div class="control-group">
+    <%= f.label :avatar, class: 'control-label' %>
+    <div class="controls">
+      <%= f.file_field :avatar %>
+      <%= f.hidden_field :avatar_cache %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :email_favorites, class: 'control-label' %>
+    <div class="controls"> 
+      <%= f.check_box :email_favorites %>
+    </div>
+  </div>  
+  <div class="control-group">
+    <div class="controls">
+      <%= f.label :email_favorites, class: 'checkbox' do %>
+        <%= f.check_box :email_favorites %> Be notified for new comments on your favorites
+      <% end %>
+      <%= f.submit "Update", class: 'btn' %>
+    </div>
+  </div>
+<% end %>
+
+<h3>Cancel my account</h3>
+<div class="horizontal-form">
+  <div class="control-group">
+    <div class="controls">
+      <p>
+        <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger btn-small' %>
+      </p>
+    </div>
+  </div>
+</div>
